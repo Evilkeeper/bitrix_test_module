@@ -1,69 +1,89 @@
 <?php
 
 use \Bitrix\Main\IO\Directory;
+use \Bitrix\Main\Localization\Loc;
 
+/**
+ * Class evilkeeper_crtusergroups
+ * Класс модуля с компонентами вывода групп пользователей
+ */
 Class evilkeeper_crtusergroups extends CModule
 {
-    var $MODULE_ID = 'evilkeeper.crtusergroups';
+    /** @var string */
+    public $MODULE_ID = 'evilkeeper.crtusergroups';
+    /** @var string */
+    public $PARTNER_NAME = 'Evilkeeper';
 
-    var $MODULE_INSTALL_PATH;
-
+    /**
+     * evilkeeper_crtusergroups constructor.
+     * Инициализация модуля.
+     */
     public function __construct()
     {
-        $path = str_replace('\\', '/', __FILE__);
-        $path = substr($path, 0, strlen($path) - strlen('/index.php'));
-        include($path.'/version.php');
-        $this->MODULE_INSTALL_PATH = $path;
+        include(__DIR__.'/version.php');
 
-        if (isset($arModuleVersion))
-        {
-            if (array_key_exists('VERSION', $arModuleVersion)) {
-                $this->MODULE_VERSION = $arModuleVersion['VERSION'];
-            }
-            if (array_key_exists('VERSION_DATE', $arModuleVersion)) {
-                $this->MODULE_VERSION_DATE = $arModuleVersion['VERSION_DATE'];
-            }
+        if (!empty($arModuleVersion['VERSION'])) {
+            $this->MODULE_VERSION = $arModuleVersion['VERSION'];
+        }
+        if (!empty($arModuleVersion['VERSION_DATE'])) {
+            $this->MODULE_VERSION_DATE = $arModuleVersion['VERSION_DATE'];
         }
 
-        $this->MODULE_NAME = 'Creative User Groups';
-        $this->MODULE_DESCRIPTION = GetMessage('MODULE_DESCRIPTION');
-        $this->PARTNER_NAME = 'Evilkeeper';
+        $this->MODULE_NAME = Loc::getMessage('MODULE_NAME');
+        $this->MODULE_DESCRIPTION = Loc::getMessage('MODULE_DESCRIPTION');
     }
 
+    /**
+     * Устанавливает файлы компонентов модуля в проект.
+     * @return bool
+     */
     public function InstallFiles()
     {
-        return CopyDirFiles($this->MODULE_INSTALL_PATH.'/components', $_SERVER['DOCUMENT_ROOT'].'local/components', true,true);
+        return CopyDirFiles(__DIR__.'/components', $_SERVER['DOCUMENT_ROOT'].'local/components', true,true);
     }
 
+    /**
+     * Удаляет файлы компонентов модуля из проекта
+     */
     public function UnInstallFiles()
     {
-        Directory::deleteDirectory($_SERVER['DOCUMENT_ROOT'].'local/components/creative');
+        Directory::deleteDirectory($_SERVER['DOCUMENT_ROOT'].'local/components/evilkeeper.crtusergroups');
     }
 
+    /**
+     * Устанавливает модуль в проект
+     */
     public function DoInstall()
     {
         global $APPLICATION;
         $res = $this->InstallFiles();
         if (!$res) {
-            die('Some error occurred :(');
+            throw new RuntimeException('Error occurred while installing files');
         }
 
         RegisterModule($this->MODULE_ID);
         $APPLICATION->IncludeAdminFile(
-            GetMessage('INSTALLING').' '.$this->MODULE_ID,
-            $this->MODULE_INSTALL_PATH.'/step.php'
+            Loc::getMessage('INSTALLING').' '.$this->MODULE_ID,
+            __DIR__.'/step.php'
         );
     }
 
+    /**
+     * Удаляет модуль из проекта
+     */
     public function DoUninstall()
     {
         global $APPLICATION;
         $this->UnInstallFiles();
+        $componentDir = $_SERVER['DOCUMENT_ROOT'].'local/components/evilkeeper.crtusergroups';
+        if (file_exists($componentDir)) {
+            throw new RuntimeException('Error occurred while uninstalling files');
+        }
 
         UnRegisterModule($this->MODULE_ID);
         $APPLICATION->IncludeAdminFile(
-            GetMessage('FORM_INSTALL_TITLE'),
-            $this->MODULE_INSTALL_PATH.'/unstep.php'
+            Loc::getMessage('FORM_INSTALL_TITLE'),
+            __DIR__.'/unstep.php'
         );
     }
 }

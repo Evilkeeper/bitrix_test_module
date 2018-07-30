@@ -1,11 +1,15 @@
+<?php
+use \Bitrix\Main\Localization\Loc;
+?>
+
 <p><a href="..">К списку групп</a></p>
 <table border="1">
     <tr>
         <th>
-            <?=GetMessage('PROPERTY')?>
+            <?=Loc::getMessage('PROPERTY')?>
         </th>
         <th>
-            <?=GetMessage('VALUE')?>
+            <?=Loc::getMessage('VALUE')?>
         </th>
     </tr>
     <?foreach ($arResult['ITEM'] as $property => $value) {?>

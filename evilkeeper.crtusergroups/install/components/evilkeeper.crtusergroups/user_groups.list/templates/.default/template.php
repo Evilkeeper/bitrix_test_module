@@ -1,17 +1,21 @@
+<?php
+use \Bitrix\Main\Localization\Loc;
+?>
+
 <table border="1">
     <tr>
         <th>
             ID
         </th>
         <th>
-            <?=GetMessage('GROUP_NAME')?>
+            <?=Loc::getMessage('GROUP_NAME')?>
         </th>
         <th>
-            <?=GetMessage('GROUP_DESCRIPTION')?>
+            <?=Loc::getMessage('GROUP_DESCRIPTION')?>
         </th>
         <?if ($arResult['ADD_DETAIL_URL']) {?>
             <th>
-                <?=GetMessage('DETAIL_LINK')?>
+                <?=Loc::getMessage('DETAIL_LINK')?>
             </th>
         <?}?>
     </tr>
@@ -29,7 +33,7 @@
             <?if ($arResult['ADD_DETAIL_URL']) {?>
                 <td>
                     <a href="<?=$ITEM['url']?>">
-                        <?=GetMessage('DETAILS')?>
+                        <?=Loc::getMessage('DETAILS')?>
                     </a>
                 </td>
             <?}?>

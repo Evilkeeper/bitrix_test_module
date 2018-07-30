@@ -1,7 +1,7 @@
 <?php
 
 $APPLICATION->IncludeComponent(
-    'creative:user_groups.detail',
+    'evilkeeper.crtusergroups:user_groups.detail',
     '',
     $arParams,
     $component

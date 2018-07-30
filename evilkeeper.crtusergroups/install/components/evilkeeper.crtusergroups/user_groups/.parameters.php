@@ -1,14 +1,16 @@
 <?php
+use \Bitrix\Main\Localization\Loc;
+
 $arComponentParameters = [
     'PARAMETERS' => [
         'SEF_MODE' => [
             'list' => [
-                'NAME' => GetMessage('GROUP_LIST'),
+                'NAME' => Loc::getMessage('GROUP_LIST'),
                 'DEFAULT' => 'index.php',
                 'VARIABLES' => []
             ],
             'detail' => [
-                'NAME' => GetMessage('GROUP_DETAIL'),
+                'NAME' => Loc::getMessage('GROUP_DETAIL'),
                 'DEFAULT' => '#ELEMENT_ID#/',
                 'VARIABLES' => []
             ]
@@ -17,7 +19,7 @@ $arComponentParameters = [
         'CACHE_TIME' => [],
         'SET_TITLE' => [],
         'NEW_TITLE' => [
-            'NAME' => GetMessage('NEW_TITLE')
+            'NAME' => Loc::getMessage('NEW_TITLE')
         ],
     ]
 ];

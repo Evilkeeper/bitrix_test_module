@@ -1,10 +1,12 @@
 <?php
+use \Bitrix\Main\Localization\Loc;
+
 if(!check_bitrix_sessid()) return;
 
-CAdminMessage::ShowNote(GetMessage('INSTALLED'));
+CAdminMessage::ShowNote(Loc::getMessage('INSTALLED'));
 ?>
 
 <form action="<?=$APPLICATION->GetCurPage()?>">
 	<input type="hidden" name="lang" value="<?=LANG?>" />
-	<input type="submit" value="<?=GetMessage('BACK')?>">
+	<input type="submit" value="<?=Loc::getMessage('BACK')?>">
 </form>
