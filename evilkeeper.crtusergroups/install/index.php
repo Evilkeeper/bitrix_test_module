@@ -35,7 +35,7 @@ Class evilkeeper_crtusergroups extends CModule
 
     /**
      * Устанавливает файлы компонентов модуля в проект.
-     * @return bool
+     * @return bool - успешность установки
      */
     public function InstallFiles()
     {
@@ -44,10 +44,13 @@ Class evilkeeper_crtusergroups extends CModule
 
     /**
      * Удаляет файлы компонентов модуля из проекта
+     * @return bool - успешность удаления
      */
     public function UnInstallFiles()
     {
-        Directory::deleteDirectory($_SERVER['DOCUMENT_ROOT'].'local/components/evilkeeper.crtusergroups');
+        $componentPath = $_SERVER['DOCUMENT_ROOT'].'local/components/'.$this->MODULE_ID;
+        Directory::deleteDirectory($componentPath);
+        return !file_exists($componentPath);
     }
 
     /**
@@ -74,9 +77,8 @@ Class evilkeeper_crtusergroups extends CModule
     public function DoUninstall()
     {
         global $APPLICATION;
-        $this->UnInstallFiles();
-        $componentDir = $_SERVER['DOCUMENT_ROOT'].'local/components/evilkeeper.crtusergroups';
-        if (file_exists($componentDir)) {
+        $res = $this->UnInstallFiles();
+        if (!$res) {
             throw new RuntimeException('Error occurred while uninstalling files');
         }
 
