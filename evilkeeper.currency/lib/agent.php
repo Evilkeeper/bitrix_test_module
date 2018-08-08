@@ -23,7 +23,7 @@ class Agent
     {
         $codes = explode(',', \Bitrix\Main\Config\Option::get('evilkeeper.currency', 'currencies'));
         $date = new DateTime($strDate);
-        $date->add('5 minutes');
+        $date->add('1 day');
 
         if (empty($codes)) {
             return __METHOD__.'("'.$date->toString().'");';

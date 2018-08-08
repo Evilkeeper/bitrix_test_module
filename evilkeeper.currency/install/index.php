@@ -103,8 +103,7 @@ Class evilkeeper_currency extends CModule
         CAgent::AddAgent(
             'Evilkeeper\Currency\Agent::getData();',
             $this->MODULE_ID,
-            'Y',
-            300
+            'Y'
         );
 
         $APPLICATION->IncludeAdminFile(
