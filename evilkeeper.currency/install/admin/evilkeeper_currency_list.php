@@ -1,0 +1,1 @@
+<?php require($_SERVER['DOCUMENT_ROOT'].'/local/modules/evilkeeper.currency/admin/evilkeeper_currency_list.php');
