@@ -46,5 +46,8 @@ use \Bitrix\Main\Localization\Loc;
     </table>
     <br/>
     <input type="submit" value="<?=Loc::getMessage('SUBMIT')?>"/>
+    <a href="./">
+        <input type="button" value="<?=Loc::getMessage('RESET')?>"/>
+    </a>
 </form>
 <hr/>

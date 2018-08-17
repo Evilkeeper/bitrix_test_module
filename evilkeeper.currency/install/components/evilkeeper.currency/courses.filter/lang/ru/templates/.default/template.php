@@ -7,3 +7,4 @@ $MESS['COURSE'] = 'Курс';
 $MESS['COURSE_FROM'] = 'От';
 $MESS['COURSE_TO'] = 'До';
 $MESS['SUBMIT'] = 'Найти';
+$MESS['RESET'] = 'Отменить';
