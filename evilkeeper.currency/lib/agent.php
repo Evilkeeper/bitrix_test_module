@@ -29,7 +29,7 @@ class Agent
             return __METHOD__.'("'.$date->toString().'");';
         }
 
-        $courses = Agent::getCourses($codes);
+        $courses = Agent::getCourses($codes, $date);
         foreach ($courses as $code => $course) {
             CourseTable::add([
                 'CODE' => $code,
@@ -41,11 +41,16 @@ class Agent
         return __METHOD__.'("'.$date->toString().'");';
     }
 
-    private static function getCourses($codes)
+    /**
+     * @param array $codes
+     * @param DateTime $date
+     * @return array
+     */
+    private static function getCourses(array $codes, $date)
     {
         $client = new \SoapClient('http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx?WSDL');
 
-        $response = $client->__soapCall('GetCursOnDate', [['On_date' => date('Y-m-d\TH:i:s')]]);
+        $response = $client->__soapCall('GetCursOnDate', [['On_date' => $date->format('Y-m-d\TH:i:s')]]);
         $XMLResponse = \simplexml_load_string($response->GetCursOnDateResult->any);
 
         $res = [];
