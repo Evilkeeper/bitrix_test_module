@@ -11,18 +11,18 @@ class CoursesFilter extends CBitrixComponent
     public function executeComponent()
     {
         if (in_array('CODE', $this->arParams)) {
-            $this->arResult['CODE'] = $_REQUEST['CODE'] ?: '';
+            $this->arResult['CODE'] = htmlentities($_REQUEST['CODE'] ?: '');
         }
         if(in_array('DATE', $this->arParams)) {
             $this->arResult['DATE'] = [
-                'FROM' => $_REQUEST['DATE_FROM'] ?: '',
-                'TO' => $_REQUEST['DATE_TO'] ?: ''
+                'FROM' => htmlentities($_REQUEST['DATE_FROM'] ?: ''),
+                'TO' => htmlentities($_REQUEST['DATE_TO'] ?: '')
             ];
         }
         if(in_array('COURSE', $this->arParams)) {
             $this->arResult['COURSE'] = [
-                'FROM' => $_REQUEST['COURSE_FROM'] ?: '',
-                'TO' => $_REQUEST['COURSE_TO'] ?: ''
+                'FROM' => htmlentities($_REQUEST['COURSE_FROM'] ?: ''),
+                'TO' => htmlentities($_REQUEST['COURSE_TO'] ?: '')
             ];
         }
 
