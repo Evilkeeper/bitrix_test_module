@@ -3,6 +3,7 @@ require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admi
 require_once($_SERVER["DOCUMENT_ROOT"]."/local/modules/evilkeeper.currency/include.php");
 
 use \Bitrix\Main\Localization\Loc;
+use \Bitrix\Main\Type\DateTime;
 use \Evilkeeper\Currency\CourseTable;
 
 $moduleID = 'evilkeeper.currency';
@@ -21,7 +22,7 @@ function fieldHasError($value, $type)
             preg_match('/[0-9]+/', $value, $res);
             return $value < 1 || $res[0] != $value;
         case 'float':
-            preg_match('/[0-9]+\.?[0-9]+/', $value, $res);
+            preg_match('/[0-9]+(\.[0-9]+)?/', $value, $res);
             return $value < 0 || $res[0] != $value;
         case 'date':
             return strtotime(str_replace('.', '-', $value)) === false;
@@ -100,7 +101,7 @@ if ($listAdmin->EditAction() && $POST_RIGHT == 'W') {
         if (fieldHasError($arFields['DATE'], 'date')) {
             $errorList[] = Loc::getMessage('DATE_ERROR');
         }
-        $arFields['DATE'] = new Bitrix\Main\Type\DateTime($arFields['DATE']);
+        $arFields['DATE'] = new DateTime($arFields['DATE']);
         if (fieldHasError($arFields['COURSE'], 'float')) {
             $errorList[] = Loc::getMessage('COURSE_ERROR');
         }
@@ -241,7 +242,7 @@ if ($totalCount > 0) {
     $arParams['offset'] = 0;
 }
 
-$list = \Evilkeeper\Currency\CourseTable::getList($arParams)->fetchAll();
+$list = CourseTable::getList($arParams)->fetchAll();
 $rsData = new CAdminResult($list, $tableID);
 
 if ($usePageNavigation) {
@@ -336,7 +337,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_aft
             ID:
         </td>
         <td>
-            <input type="text" name="find_id" size="47" value="<?=htmlspecialchars($find_id)?>"/>
+            <input type="text" name="find_id" size="47" value="<?=htmlentities($find_id)?>"/>
         </td>
     </tr>
     <tr>
@@ -344,15 +345,15 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_aft
             <?=Loc::getMessage('CODE')?>:
         </td>
         <td>
-            <input type="text" name="find_code" size="47" value="<?=htmlspecialchars($find_code)?>"/>
+            <input type="text" name="find_code" size="47" value="<?=htmlentities($find_code)?>"/>
         </td>
     </tr>
     <tr>
         <td><?=Loc::getMessage('DATE')?>:</td>
         <td>
-            <input type="text" name="find_date_from" value="<?=htmlspecialchars($find_date_from)?>"/>
+            <input type="text" name="find_date_from" value="<?=htmlentities($find_date_from)?>"/>
             -
-            <input type="text" name="find_date_to" value="<?=$find_date_to?>"/>
+            <input type="text" name="find_date_to" value="<?=htmlentities($find_date_to)?>"/>
         </td>
     </tr>
     <tr>
@@ -360,9 +361,9 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_aft
             <?=Loc::getMessage('COURSE')?>:
         </td>
         <td>
-            <input type="text" name="find_course_from" value="<?=$find_course_from?>"/>
+            <input type="text" name="find_course_from" value="<?=htmlentities($find_course_from)?>"/>
             -
-            <input type="text" name="find_course_to" value="<?=$find_course_to?>"/>
+            <input type="text" name="find_course_to" value="<?=htmlentities($find_course_to)?>"/>
         </td>
     </tr>
     <?

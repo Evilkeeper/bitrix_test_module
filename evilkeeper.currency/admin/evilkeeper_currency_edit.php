@@ -3,6 +3,7 @@ require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admi
 require_once($_SERVER["DOCUMENT_ROOT"]."/local/modules/evilkeeper.currency/include.php");
 
 use \Bitrix\Main\Localization\Loc;
+use \Bitrix\Main\Type\DateTime;
 use \Evilkeeper\Currency\CourseTable;
 
 $moduleID = 'evilkeeper.currency';
@@ -21,7 +22,7 @@ function fieldHasError($value, $type)
             preg_match('/[0-9]+/', $value, $res);
             return $value < 1 || $res[0] != $value;
         case 'float':
-            preg_match('/[0-9]+\.?[0-9]+/', $value, $res);
+            preg_match('/[0-9]+(\.[0-9]+)?/', $value, $res);
             return $value < 0 || $res[0] != $value;
         case 'date':
             return strtotime(str_replace('.', '-', $value)) === false;
@@ -88,7 +89,7 @@ if (
     } else {
         $data = [
             'CODE' => $CODE,
-            'DATE' => fieldHasError($DATE, 'date') ? NULL : new Bitrix\Main\Type\DateTime($DATE),
+            'DATE' => fieldHasError($DATE, 'date') ? NULL : new DateTime($DATE),
             'COURSE' => $COURSE
         ];
 
